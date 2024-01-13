@@ -1,4 +1,6 @@
 use i3ipc::{event, reply::NodeType, I3Connection, I3EventListener, Subscription};
+use std::thread;
+use std::time::Duration;
 
 fn count_windows(node: &i3ipc::reply::Node) -> i32 {
     let mut count = 0;
@@ -56,6 +58,8 @@ fn main() {
     i3.run_command("split h").unwrap();
 
     loop {
+        thread::sleep(Duration::from_millis(100));
+
         // on window close or open event, toggle splitting horizontally and vertically
         let event = iter.next().unwrap().unwrap();
 
